@@ -3,12 +3,16 @@ import './globals.css'
 
 export const metadata: Metadata = {
     title: 'NEP 2020 Mumbai University Sem 3 CGPA Calculator',
-    description: 'Calculate your CGPA for Mumbai University Third Semester Computer Engineering under NEP 2020. Free online SGPA calculator with official grading criteria, component-wise marks input, and instant results.',
+    description: 'Calculate your CGPA for Mumbai University Third Semester (Computer, IT & EXTC) under NEP 2020. Free online SGPA calculator with official grading criteria, component-wise marks input, and instant results.',
     keywords: [
         'Mumbai University CGPA Calculator',
         'NEP 2020 CGPA Calculator',
         'Mumbai University Semester 3 Calculator',
         'Computer Engineering CGPA',
+        'IT CGPA Calculator',
+        'Information Technology CGPA',
+        'EXTC CGPA Calculator',
+        'Electronics and Telecommunication CGPA',
         'SGPA Calculator Mumbai University',
         'Third Semester Grade Calculator',
         'MU CGPA Calculator',
@@ -45,13 +49,13 @@ export const metadata: Metadata = {
         locale: 'en_IN',
         url: 'https://yourdomain.com',
         title: 'NEP 2020 Mumbai University Sem 3 CGPA Calculator',
-        description: 'Free online CGPA calculator for Mumbai University Third Semester Computer Engineering students. Calculate SGPA instantly with official NEP 2020 grading criteria.',
+        description: 'Free online CGPA calculator for Mumbai University Third Semester (Computer, IT & EXTC) students. Calculate SGPA instantly with official NEP 2020 grading criteria.',
         siteName: 'Mumbai University CGPA Calculator',
     },
     twitter: {
         card: 'summary_large_image',
         title: 'NEP 2020 Mumbai University Sem 3 CGPA Calculator',
-        description: 'Calculate your CGPA for Mumbai University Third Semester Computer Engineering under NEP 2020',
+        description: 'Calculate your CGPA for Mumbai University Third Semester (Computer, IT & EXTC) under NEP 2020',
         creator: '@sumitsingh',
     },
     category: 'Education',

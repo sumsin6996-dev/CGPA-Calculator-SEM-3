@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Subject } from '../types';
-import { INITIAL_SUBJECTS } from '../subjects';
+import { getSubjectsByBranch, Branch } from '../subjects';
 import { calculateGrade, calculateSGPA, checkMinimumMarks } from '../grading';
 import SubjectInput from './SubjectInput';
 import Results from './Results';
 
 export default function Calculator() {
-    const [subjects, setSubjects] = useState<Subject[]>(INITIAL_SUBJECTS);
+    const [branch, setBranch] = useState<Branch>('computer');
+    const [subjects, setSubjects] = useState<Subject[]>(getSubjectsByBranch('computer'));
+    const subjectRefs = useRef<{ [key: string]: { focusFirstInput: () => void } | null }>({});
 
     const handleComponentChange = (code: string, componentName: string, marks: number) => {
         setSubjects((prev) =>
@@ -57,7 +59,26 @@ export default function Calculator() {
     };
 
     const handleReset = () => {
-        setSubjects(INITIAL_SUBJECTS);
+        setSubjects(getSubjectsByBranch(branch));
+    };
+
+    const handleBranchChange = (newBranch: Branch) => {
+        setBranch(newBranch);
+        setSubjects(getSubjectsByBranch(newBranch));
+    };
+
+    // Create callback for moving to next subject
+    const createNextSubjectCallback = (currentIndex: number) => {
+        return () => {
+            const nextIndex = currentIndex + 1;
+            if (nextIndex < subjects.length) {
+                const nextSubject = subjects[nextIndex];
+                const nextRef = subjectRefs.current[nextSubject.code];
+                if (nextRef) {
+                    setTimeout(() => nextRef.focusFirstInput(), 50);
+                }
+            }
+        };
     };
 
     const result = calculateSGPA(subjects);
@@ -82,11 +103,44 @@ export default function Calculator() {
                     CGPA Calculator
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 text-lg">
-                    Third Semester - Computer Engineering
+                    Third Semester - {branch === 'computer' ? 'Computer Engineering' : branch === 'it' ? 'Information Technology' : 'Electronics & Telecommunication'}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
                     Total Credits: 22
                 </p>
+            </div>
+
+            {/* Branch Selector */}
+            <div className="mb-8 flex justify-center">
+                <div className="inline-flex bg-gray-100 dark:bg-gray-800 rounded-xl p-1.5 shadow-lg border border-gray-200 dark:border-gray-700">
+                    <button
+                        onClick={() => handleBranchChange('computer')}
+                        className={`px-8 py-3 rounded-lg font-semibold text-sm transition-all duration-200 ${branch === 'computer'
+                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
+                            }`}
+                    >
+                        Computer Engineering
+                    </button>
+                    <button
+                        onClick={() => handleBranchChange('it')}
+                        className={`px-8 py-3 rounded-lg font-semibold text-sm transition-all duration-200 ${branch === 'it'
+                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
+                            }`}
+                    >
+                        Information Technology
+                    </button>
+                    <button
+                        onClick={() => handleBranchChange('extc')}
+                        className={`px-8 py-3 rounded-lg font-semibold text-sm transition-all duration-200 ${branch === 'extc'
+                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
+                            }`}
+                    >
+                        EXTC
+                    </button>
+                </div>
             </div>
 
             {/* Failure Warning */}
@@ -126,11 +180,15 @@ export default function Calculator() {
                             Theory Subjects
                         </h4>
                         <div className="space-y-3">
-                            {theorySubjects.map((subject) => (
+                            {theorySubjects.map((subject, index) => (
                                 <SubjectInput
                                     key={subject.code}
+                                    ref={(el) => {
+                                        subjectRefs.current[subject.code] = el;
+                                    }}
                                     subject={subject}
                                     onComponentChange={handleComponentChange}
+                                    onLastInputComplete={createNextSubjectCallback(index)}
                                 />
                             ))}
                         </div>
@@ -142,11 +200,15 @@ export default function Calculator() {
                             Practicals / TW
                         </h4>
                         <div className="space-y-3">
-                            {practicalSubjects.map((subject) => (
+                            {practicalSubjects.map((subject, index) => (
                                 <SubjectInput
                                     key={subject.code}
+                                    ref={(el) => {
+                                        subjectRefs.current[subject.code] = el;
+                                    }}
                                     subject={subject}
                                     onComponentChange={handleComponentChange}
+                                    onLastInputComplete={createNextSubjectCallback(theorySubjects.length + index)}
                                 />
                             ))}
                         </div>
@@ -190,11 +252,32 @@ export default function Calculator() {
                                 </p>
                                 <ul className="text-xs text-blue-700 dark:text-blue-300 mt-1 ml-4 list-disc space-y-0.5">
                                     <li>Theory External: Minimum 24/60</li>
-                                    <li>AOA/COA Labs TW: Minimum 10/25</li>
-                                    <li>AOA/COA Labs OR: Minimum 10/25</li>
-                                    <li>FSJP TW: Minimum 20/50</li>
-                                    <li>FSJP OR: Minimum 10/25</li>
-                                    <li>ED/ESE TW: Minimum 20/50</li>
+                                    <li>Theory Internal: Minimum 16/40</li>
+                                    {branch === 'computer' && (
+                                        <>
+                                            <li>AOA/COA Labs TW: Minimum 10/25</li>
+                                            <li>AOA/COA Labs OR: Minimum 10/25</li>
+                                            <li>FSJP TW: Minimum 20/50</li>
+                                            <li>FSJP OR: Minimum 10/25</li>
+                                        </>
+                                    )}
+                                    {branch === 'it' && (
+                                        <>
+                                            <li>ADSA/DBMS Labs TW: Minimum 10/25</li>
+                                            <li>ADSA/DBMS Labs OR: Minimum 10/25</li>
+                                            <li>FSJP TW: Minimum 20/50</li>
+                                            <li>FSJP OR: Minimum 10/25</li>
+                                        </>
+                                    )}
+                                    {branch === 'extc' && (
+                                        <>
+                                            <li>EDLC/DSD Labs TW: Minimum 10/25</li>
+                                            <li>EDLC/DSD Labs OR: Minimum 10/25</li>
+                                            <li>C++ & Java TW: Minimum 20/50</li>
+                                            <li>C++ & Java OR: Minimum 10/25</li>
+                                        </>
+                                    )}
+                                    <li>ED/ES TW: Minimum 20/50</li>
                                 </ul>
                             </div>
                             <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
@@ -204,9 +287,25 @@ export default function Calculator() {
                                 <ul className="text-xs text-purple-700 dark:text-purple-300 mt-1 ml-4 list-disc space-y-0.5">
                                     <li>Theory: External (60) + Internal (40) = 100</li>
                                     <li>Maths: External (60) + Internal (40) + TW (25) = 125</li>
-                                    <li>AOA/COA Labs: TW (25) + OR (25) = 50</li>
-                                    <li>FSJP: TW (50) + OR (25) = 75</li>
-                                    <li>ED/ESE: TW (50) = 50</li>
+                                    {branch === 'computer' && (
+                                        <>
+                                            <li>AOA/COA Labs: TW (25) + OR (25) = 50</li>
+                                            <li>FSJP: TW (50) + OR (25) = 75</li>
+                                        </>
+                                    )}
+                                    {branch === 'it' && (
+                                        <>
+                                            <li>AOA/DBMS Labs: TW (25) + OR (25) = 50</li>
+                                            <li>FSJP: TW (50) + OR (25) = 75</li>
+                                        </>
+                                    )}
+                                    {branch === 'extc' && (
+                                        <>
+                                            <li>EDLC/DSD Labs: TW (25) + OR (25) = 50</li>
+                                            <li>C++ & Java: TW (50) + OR (25) = 75</li>
+                                        </>
+                                    )}
+                                    <li>ED/ES: TW (50) = 50</li>
                                 </ul>
                             </div>
                         </div>

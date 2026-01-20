@@ -11,7 +11,7 @@ export default function Home() {
             <Calculator />
 
             <footer className="mt-16 text-center text-sm text-gray-500 dark:text-gray-400">
-                <p>Mumbai University Third Semester Computer Engineering (NEP 2020)</p>
+                <p>Mumbai University Third Semester (NEP 2020)</p>
                 <p className="mt-1">Calculate your SGPA based on official grading criteria</p>
                 <p className="mt-4 text-xs flex items-center justify-center gap-1">
                     <span>Developed with</span>
