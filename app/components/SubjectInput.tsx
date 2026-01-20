@@ -52,8 +52,8 @@ export default function SubjectInput({ subject, onComponentChange }: SubjectInpu
 
     return (
         <div className={`group relative bg-white dark:bg-gray-800 rounded-xl p-5 border-2 transition-all duration-300 hover:shadow-lg ${subject.isFailed
-                ? 'border-red-500 dark:border-red-500'
-                : 'border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-indigo-500/10'
+            ? 'border-red-500 dark:border-red-500'
+            : 'border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-indigo-500/10'
             }`}>
             <div className="flex flex-col gap-4">
                 {/* Header */}
@@ -102,7 +102,9 @@ export default function SubjectInput({ subject, onComponentChange }: SubjectInpu
                                 </label>
                                 <div className="flex items-center gap-2">
                                     <input
-                                        ref={(el) => (inputRefs.current[inputKey] = el)}
+                                        ref={(el: HTMLInputElement | null) => {
+                                            inputRefs.current[inputKey] = el;
+                                        }}
                                         type="number"
                                         min="0"
                                         max={component.maxMarks}
@@ -111,8 +113,8 @@ export default function SubjectInput({ subject, onComponentChange }: SubjectInpu
                                         onKeyDown={(e) => handleKeyDown(e, index)}
                                         placeholder="0"
                                         className={`w-20 px-3 py-1.5 text-center font-semibold bg-gray-50 dark:bg-gray-700 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none ${isBelowMin
-                                                ? 'border-red-500 text-red-600 dark:text-red-400'
-                                                : 'border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white'
+                                            ? 'border-red-500 text-red-600 dark:text-red-400'
+                                            : 'border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white'
                                             }`}
                                     />
                                     <span className="text-xs text-gray-400 whitespace-nowrap">
