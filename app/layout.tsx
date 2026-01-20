@@ -61,6 +61,9 @@ export const metadata: Metadata = {
     },
     category: 'Education',
     classification: 'Education Tool',
+    other: {
+        'google-adsense-account': 'ca-pub-7801727099869596',
+    },
 }
 
 export default function RootLayout({
