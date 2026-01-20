@@ -72,6 +72,9 @@ export default function Calculator() {
         <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-8">
+                <div className="inline-block bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full px-6 py-2 text-sm font-bold mb-4 shadow-lg">
+                    NEP 2020
+                </div>
                 <h1 className="text-5xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
                     Mumbai University
                 </h1>
@@ -212,9 +215,11 @@ export default function Calculator() {
 
                 {/* Results Section */}
                 <div className="lg:col-span-1">
-                    <div className="sticky top-8">
-                        <Results result={result} />
-                    </div>
+                    {hasMarks && (
+                        <div className="sticky top-8">
+                            <Results result={result} />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

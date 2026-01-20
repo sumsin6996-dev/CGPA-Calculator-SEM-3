@@ -28,12 +28,15 @@ export default function Results({ result }: ResultsProps) {
     return (
         <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl p-8 text-white shadow-2xl">
             <div className="text-center mb-6">
+                <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm font-semibold mb-3">
+                    NEP 2020
+                </div>
                 <h2 className="text-2xl font-bold mb-2">Your SGPA</h2>
-                <div className="relative inline-block">
+                <div className="flex items-center justify-center gap-2">
                     <div className={`text-7xl font-black ${getSGPAColor(result.sgpa)} drop-shadow-lg`}>
                         {result.sgpa.toFixed(2)}
                     </div>
-                    <div className="absolute -top-2 -right-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold">
+                    <div className="text-3xl font-bold text-white/60 mt-4">
                         /10
                     </div>
                 </div>
