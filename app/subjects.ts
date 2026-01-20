@@ -1,0 +1,147 @@
+import { Subject } from './types';
+
+// Third Semester Computer Engineering - Mumbai University
+export const INITIAL_SUBJECTS: Subject[] = [
+    // Theory Subjects with External (60) + Internal (40) = 100
+    {
+        code: 'Maths',
+        name: 'Engineering Mathematics – III',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'Term Work', minMarks: 10, maxMarks: 25, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    {
+        code: 'DSGT',
+        name: 'Discrete Structure and Graph Theory',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    {
+        code: 'AOA',
+        name: 'Analysis of Algorithms',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    {
+        code: 'COA',
+        name: 'Computer Organization & Architecture',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    {
+        code: 'OE',
+        name: 'Open Elective',
+        credits: 2,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    // Practicals / TW (Labs with TW + OR)
+    {
+        code: 'AOA Lab',
+        name: 'Analysis of Algorithms Lab',
+        credits: 1,
+        components: [
+            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    {
+        code: 'COA Lab',
+        name: 'Computer Organization & Architecture Lab',
+        credits: 1,
+        components: [
+            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    {
+        code: 'FSJP',
+        name: 'Full Stack Java Programming',
+        credits: 2,
+        components: [
+            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    // ED and ESE - Only TW (50)
+    {
+        code: 'ED',
+        name: 'Entreprenuership Development',
+        credits: 2,
+        components: [
+            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+    {
+        code: 'ESE',
+        name: 'Environemental Science and Engineering',
+        credits: 2,
+        components: [
+            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+        ],
+        totalMarks: 0,
+        grade: '-',
+        gradePoints: 0,
+        percentage: 0,
+        isFailed: false,
+    },
+];
