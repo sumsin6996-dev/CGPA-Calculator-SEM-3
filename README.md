@@ -60,6 +60,9 @@ A modern, interactive CGPA calculator for Mumbai University Third Semester Compu
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Font**: Inter (Google Fonts)
+- **Analytics**: Vercel Analytics
+- **Performance**: Vercel Speed Insights
+- **Monetization**: Google AdSense
 
 ## Getting Started
 
@@ -81,12 +84,21 @@ cd mu-cgpa-calculator
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables:
+```bash
+# Copy the example environment file
+cp .env.example .env.local
+
+# Edit .env.local and add your Google AdSense ID
+# NEXT_PUBLIC_ADSENSE_ID=ca-pub-XXXXXXXXXXXXXXXX
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ### Build for Production
 

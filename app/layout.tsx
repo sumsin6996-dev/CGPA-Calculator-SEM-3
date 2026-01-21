@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -62,7 +64,7 @@ export const metadata: Metadata = {
     category: 'Education',
     classification: 'Education Tool',
     other: {
-        'google-adsense-account': 'ca-pub-7801727099869596',
+        'google-adsense-account': process.env.NEXT_PUBLIC_ADSENSE_ID || '',
     },
 }
 
@@ -71,17 +73,25 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+    const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
+
     return (
         <html lang="en">
             <head>
-                <Script
-                    async
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7801727099869596"
-                    crossOrigin="anonymous"
-                    strategy="afterInteractive"
-                />
+                {adsenseId && (
+                    <Script
+                        async
+                        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
+                        crossOrigin="anonymous"
+                        strategy="afterInteractive"
+                    />
+                )}
             </head>
-            <body>{children}</body>
+            <body>
+                {children}
+                <Analytics />
+                <SpeedInsights />
+            </body>
         </html>
     )
 }
