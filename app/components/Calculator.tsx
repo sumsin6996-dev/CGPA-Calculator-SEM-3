@@ -227,10 +227,11 @@ export default function Calculator() {
                                 { grade: 'B+', range: '60-69', points: 7 },
                                 { grade: 'B', range: '55-59', points: 6 },
                                 { grade: 'C', range: '50-54', points: 5 },
-                                { grade: 'F', range: '< 50', points: 0 },
-                            ].map((item) => (
+                                { grade: 'C', range: '40-49', points: 5 },
+                                { grade: 'F', range: '< 40', points: 0 },
+                            ].map((item, idx) => (
                                 <div
-                                    key={item.grade}
+                                    key={`${item.grade}-${idx}`}
                                     className="bg-white dark:bg-gray-700 rounded-lg p-3 text-center"
                                 >
                                     <div className={`text-lg font-bold ${getGradeColor(item.grade)}`}>

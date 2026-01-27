@@ -52,7 +52,8 @@ A modern, interactive CGPA calculator for Mumbai University Third Semester Compu
 | B+    | 60-69%     | 7            |
 | B     | 55-59%     | 6            |
 | C     | 50-54%     | 5            |
-| F     | < 50%      | 0            |
+| C     | 40-49%     | 5            |
+| F     | < 40%      | 0            |
 
 ## Tech Stack
 

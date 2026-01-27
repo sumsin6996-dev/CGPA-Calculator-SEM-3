@@ -8,7 +8,8 @@ export const GRADE_RANGES: GradeRange[] = [
     { min: 60, max: 69.99, grade: 'B+', points: 7 },
     { min: 55, max: 59.99, grade: 'B', points: 6 },
     { min: 50, max: 54.99, grade: 'C', points: 5 },
-    { min: 0, max: 49.99, grade: 'F', points: 0 },
+    { min: 40, max: 49.99, grade: 'C', points: 5 },
+    { min: 0, max: 39.99, grade: 'F', points: 0 },
 ];
 
 export function calculateGrade(
