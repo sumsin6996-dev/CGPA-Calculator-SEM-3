@@ -8,7 +8,7 @@ export const GRADE_RANGES: GradeRange[] = [
     { min: 60, max: 69.99, grade: 'B+', points: 7 },
     { min: 55, max: 59.99, grade: 'B', points: 6 },
     { min: 50, max: 54.99, grade: 'C', points: 5 },
-    { min: 40, max: 49.99, grade: 'C', points: 5 },
+    { min: 40, max: 49.99, grade: 'D', points: 4 },
     { min: 0, max: 39.99, grade: 'F', points: 0 },
 ];
 
@@ -77,6 +77,7 @@ export function getGradeColor(grade: string): string {
         'B+': 'text-yellow-500',
         'B': 'text-orange-500',
         'C': 'text-amber-600',
+        'D': 'text-orange-700',
         'F': 'text-red-600',
         '-': 'text-gray-400',
     };
@@ -91,6 +92,7 @@ export function getGradeBgColor(grade: string): string {
         'B+': 'bg-yellow-500/10 border-yellow-500/30',
         'B': 'bg-orange-500/10 border-orange-500/30',
         'C': 'bg-amber-600/10 border-amber-600/30',
+        'D': 'bg-orange-700/10 border-orange-700/30',
         'F': 'bg-red-600/10 border-red-600/30',
         '-': 'bg-gray-500/10 border-gray-500/30',
     };

@@ -227,7 +227,7 @@ export default function Calculator() {
                                 { grade: 'B+', range: '60-69', points: 7 },
                                 { grade: 'B', range: '55-59', points: 6 },
                                 { grade: 'C', range: '50-54', points: 5 },
-                                { grade: 'C', range: '40-49', points: 5 },
+                                { grade: 'D', range: '40-49', points: 4 },
                                 { grade: 'F', range: '< 40', points: 0 },
                             ].map((item, idx) => (
                                 <div
@@ -315,11 +315,9 @@ export default function Calculator() {
 
                 {/* Results Section */}
                 <div className="lg:col-span-1">
-                    {hasMarks && (
-                        <div className="sticky top-8">
-                            <Results result={result} />
-                        </div>
-                    )}
+                    <div className="sticky top-8">
+                        <Results result={result} />
+                    </div>
                 </div>
             </div>
         </div>
@@ -334,6 +332,7 @@ function getGradeColor(grade: string): string {
         'B+': 'text-yellow-500',
         'B': 'text-orange-500',
         'C': 'text-amber-600',
+        'D': 'text-orange-700',
         'F': 'text-red-600',
     };
     return colors[grade] || 'text-gray-400';
