@@ -43,6 +43,15 @@ export default function Results({ result }: ResultsProps) {
                 <p className="text-xl font-semibold mt-3 text-white/90">
                     {getSGPAGrade(result.sgpa)}
                 </p>
+                {/* Percentage Display */}
+                {result.percentage > 0 && (
+                    <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-xl px-6 py-3 inline-block">
+                        <div className="text-sm text-white/70 mb-1">Approximate Percentage</div>
+                        <div className="text-3xl font-bold text-white">
+                            {result.percentage.toFixed(2)}%
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-6">

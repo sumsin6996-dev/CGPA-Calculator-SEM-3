@@ -26,6 +26,7 @@ export interface GradeRange {
 
 export interface CalculationResult {
     sgpa: number;
+    percentage: number;
     totalCredits: number;
     earnedCredits: number;
     gradeDistribution: { [key: string]: number };
