@@ -60,8 +60,9 @@ export function calculateSGPA(subjects: Subject[]): CalculationResult {
     });
 
     const sgpa = totalCredits > 0 ? weightedSum / totalCredits : 0;
-    // Convert SGPA to percentage using Mumbai University formula
-    const percentage = sgpa > 0 ? Math.min(((sgpa - 0.75) * 10), 100) : 0;
+    // Convert SGPA to percentage using Mumbai University standard formula
+    // Percentage = (CGPA × 7.1) + 11
+    const percentage = sgpa > 0 ? Math.min((sgpa * 7.1 + 11), 100) : 0;
 
     return {
         sgpa: Math.round(sgpa * 100) / 100,
