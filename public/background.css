@@ -1,0 +1,132 @@
+/**
+ * Animated Starfield Background Styles
+ * Ensures proper layering and performance optimization
+ */
+
+/* Ensure body allows for fixed positioning */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Canvas background layer */
+#starfield-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    /* Allow clicks to pass through */
+
+    /* GPU acceleration */
+    transform: translateZ(0);
+    will-change: transform;
+
+    /* Smooth rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Ensure content is above background */
+.content-wrapper,
+main,
+.app-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Optional: Add subtle overlay for better text readability */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    background: radial-gradient(ellipse at center,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+}
+
+/* Performance optimizations */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure smooth scrolling doesn't interfere with background */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    #starfield-canvas {
+        /* Reduce complexity on mobile if needed */
+        image-rendering: auto;
+    }
+}
+
+/* Prevent layout shift */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    z-index: -2;
+}
+
+/* Loading state (optional) */
+.starfield-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #000000, #0a0a1a, #000000);
+    z-index: -1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    #starfield-canvas {
+        animation: none !important;
+    }
+
+    /* You can add a class to disable animations in JS */
+    .reduce-motion #starfield-canvas {
+        display: none;
+    }
+
+    .reduce-motion body::before {
+        background: linear-gradient(to bottom, #000000, #0a0a1a, #000000);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    #starfield-canvas {
+        opacity: 0.5;
+    }
+}

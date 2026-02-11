@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Animated Starfield Background Demo">
+  <title>Animated Starfield Background - Demo</title>
+  
+  <!-- Background CSS -->
+  <link rel="stylesheet" href="background.css">
+  
+  <style>
+    /* Demo page styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    /* Content wrapper */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* Hero section */
+    .hero {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+      }
+      50% {
+        filter: drop-shadow(0 0 30px rgba(118, 75, 162, 0.8));
+      }
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+      text-align: left;
+    }
+
+    .feature {
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .feature:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .feature h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #667eea;
+    }
+
+    .feature p {
+      font-size: 0.95rem;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .cta-button:active {
+      transform: translateY(0);
+    }
+
+    /* Info section */
+    .info-section {
+      margin-top: 4rem;
+      padding: 2rem;
+      max-width: 1000px;
+      text-align: left;
+    }
+
+    .info-card {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .info-card h2 {
+      color: #667eea;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .info-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .info-card li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .info-card li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: #667eea;
+    }
+
+    code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #a8dadc;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Content -->
+  <div class="content-wrapper">
+    <div class="hero">
+      <h1>✨ Animated Starfield</h1>
+      <p>
+        Experience a mesmerizing, live animated space background that brings your website to life.
+        Smooth 60fps performance with parallax effects, twinkling stars, and continuous motion.
+      </p>
+      <button class="cta-button" onclick="toggleAnimation()">Toggle Animation</button>
+
+      <div class="features">
+        <div class="feature">
+          <h3>🌟 Twinkling Stars</h3>
+          <p>Dynamic brightness pulsing creates a realistic starfield effect</p>
+        </div>
+        <div class="feature">
+          <h3>🎯 Parallax Effect</h3>
+          <p>Mouse movement creates depth with multi-layer parallax</p>
+        </div>
+        <div class="feature">
+          <h3>🌊 Drift Motion</h3>
+          <p>Subtle continuous movement keeps the background alive</p>
+        </div>
+        <div class="feature">
+          <h3>⚡ Optimized</h3>
+          <p>GPU-accelerated canvas rendering for smooth 60fps</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="info-card">
+        <h2>🚀 Features</h2>
+        <ul>
+          <li>200+ animated stars with individual twinkling patterns</li>
+          <li>Smooth parallax effect following mouse movement</li>
+          <li>Continuous drift motion for dynamic feel</li>
+          <li>Subtle zoom in/out effect for depth realism</li>
+          <li>GPU-accelerated Canvas API rendering</li>
+          <li>Fully responsive across all devices</li>
+          <li>Accessibility support (reduced motion)</li>
+          <li>Zero impact on website scrolling or interaction</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h2>📦 Integration</h2>
+        <p style="margin-bottom: 1rem;">Simply add these files to your HTML:</p>
+        <ul>
+          <li>Include <code>background.css</code> in your <code>&lt;head&gt;</code></li>
+          <li>Include <code>background.js</code> before closing <code>&lt;/body&gt;</code></li>
+          <li>Animation starts automatically on page load</li>
+          <li>Customize options by passing config to <code>AnimatedStarfield</code></li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h2>⚙️ Customization</h2>
+        <p style="margin-bottom: 1rem;">Configure the animation with these options:</p>
+        <ul>
+          <li><code>starCount</code> - Number of stars (default: 200)</li>
+          <li><code>twinkleSpeed</code> - Twinkling animation speed (default: 0.02)</li>
+          <li><code>driftSpeed</code> - Drift motion speed (default: 0.3)</li>
+          <li><code>parallaxIntensity</code> - Mouse parallax strength (default: 0.02)</li>
+          <li><code>zoomSpeed</code> - Zoom animation speed (default: 0.0005)</li>
+          <li><code>zoomRange</code> - Zoom effect range (default: 0.05)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Script -->
+  <script src="background.js"></script>
+
+  <!-- Demo controls -->
+  <script>
+    let animationEnabled = true;
+
+    function toggleAnimation() {
+      if (animationEnabled) {
+        window.starfield.destroy();
+        animationEnabled = false;
+      } else {
+        window.starfield = new AnimatedStarfield();
+        animationEnabled = true;
+      }
+    }
+
+    // Example: Custom configuration
+    // Uncomment to use custom settings
+    /*
+    window.starfield.destroy();
+    window.starfield = new AnimatedStarfield({
+      starCount: 300,
+      twinkleSpeed: 0.03,
+      driftSpeed: 0.5,
+      parallaxIntensity: 0.03,
+      zoomSpeed: 0.001,
+      zoomRange: 0.08
+    });
+    */
+  </script>
+</body>
+</html>
