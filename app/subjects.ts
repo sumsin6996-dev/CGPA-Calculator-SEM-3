@@ -457,7 +457,7 @@ export const SEMESTER_CONFIG: Record<
             computer: SEM4_COMPUTER_RAW.map(makeSubject),
         },
         practicalStartIndex: {
-            computer: 5, // first 5 are theory subjects
+            computer: 4, // first 4 are theory subjects (BFS, CT, DBMS, OS)
         },
     },
     // ── ADD SEMESTER 5, 6, 7, 8 HERE ─────────────────────────────────────────
