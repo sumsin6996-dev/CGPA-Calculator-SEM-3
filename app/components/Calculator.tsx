@@ -241,6 +241,9 @@ export default function Calculator() {
                 <div className="lg:col-span-1">
                     <div className="sticky top-8">
                         <Results result={result} />
+                        {hasMarks && (
+                            <SubjectBreakdownTable subjects={subjects} />
+                        )}
                     </div>
                 </div>
             </div>
@@ -323,6 +326,72 @@ function GradingScaleReference({ semester, branch }: { semester: string; branch:
                     </ul>
                 </div>
             )}
+        </div>
+    );
+}
+
+// ─── Subject Breakdown Table ──────────────────────────────────────────────────
+function SubjectBreakdownTable({ subjects }: { subjects: Subject[] }) {
+    const filledSubjects = subjects.filter((s) => s.totalMarks > 0);
+    if (filledSubjects.length === 0) return null;
+
+    return (
+        <div className="mt-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                <h4 className="font-semibold text-gray-800 dark:text-white text-sm">
+                    Subject-wise Breakdown
+                </h4>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                    <thead>
+                        <tr className="bg-gray-50 dark:bg-gray-700">
+                            <th className="text-left px-3 py-2 font-semibold text-gray-600 dark:text-gray-300">Subject</th>
+                            <th className="text-center px-2 py-2 font-semibold text-gray-600 dark:text-gray-300">Marks</th>
+                            <th className="text-center px-2 py-2 font-semibold text-gray-600 dark:text-gray-300">%</th>
+                            <th className="text-center px-2 py-2 font-semibold text-gray-600 dark:text-gray-300">Grade</th>
+                            <th className="text-center px-2 py-2 font-semibold text-gray-600 dark:text-gray-300">GP</th>
+                            <th className="text-center px-2 py-2 font-semibold text-gray-600 dark:text-gray-300">Cr</th>
+                            <th className="text-center px-2 py-2 font-semibold text-gray-600 dark:text-gray-300">Cr×GP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filledSubjects.map((s) => {
+                            const maxTotal = s.components.reduce((sum, c) => sum + c.maxMarks, 0);
+                            return (
+                                <tr
+                                    key={s.code}
+                                    className={`border-t border-gray-100 dark:border-gray-700 ${
+                                        s.isFailed ? 'bg-red-50 dark:bg-red-900/10' : ''
+                                    }`}
+                                >
+                                    <td className="px-3 py-2 text-gray-800 dark:text-gray-200 font-medium truncate max-w-[120px]">
+                                        {s.code}
+                                    </td>
+                                    <td className="text-center px-2 py-2 text-gray-600 dark:text-gray-400">
+                                        {s.totalMarks}/{maxTotal}
+                                    </td>
+                                    <td className="text-center px-2 py-2 text-gray-600 dark:text-gray-400">
+                                        {s.percentage.toFixed(1)}
+                                    </td>
+                                    <td className={`text-center px-2 py-2 font-bold ${getGradeColor(s.grade)}`}>
+                                        {s.grade}
+                                    </td>
+                                    <td className="text-center px-2 py-2 text-gray-600 dark:text-gray-400">
+                                        {s.gradePoints}
+                                    </td>
+                                    <td className="text-center px-2 py-2 text-gray-600 dark:text-gray-400">
+                                        {s.credits}
+                                    </td>
+                                    <td className="text-center px-2 py-2 font-semibold text-gray-800 dark:text-gray-200">
+                                        {(s.credits * s.gradePoints).toFixed(0)}
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
