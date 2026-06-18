@@ -1,10 +1,22 @@
-import { Subject, SemesterMeta } from './types';
+import { Subject, SubjectComponent, SemesterMeta } from './types';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HELPER – creates a fresh copy of a subject so state mutations never
-// bleed between renders / semester resets.
+// Raw subject shape used in the config arrays – components don't need `marks`
+// because makeSubject initialises them to 0.
 // ─────────────────────────────────────────────────────────────────────────────
-function makeSubject(s: Omit<Subject, 'totalMarks' | 'grade' | 'gradePoints' | 'percentage' | 'isFailed'>): Subject {
+type RawComponent = Omit<SubjectComponent, 'marks'>;
+
+type RawSubject = {
+    code: string;
+    name: string;
+    credits: number;
+    components: RawComponent[];
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPER – creates a fresh Subject from a RawSubject definition.
+// ─────────────────────────────────────────────────────────────────────────────
+function makeSubject(s: RawSubject): Subject {
     return {
         ...s,
         components: s.components.map((c) => ({ ...c, marks: 0 })),
