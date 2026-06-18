@@ -1,461 +1,397 @@
-import { Subject } from './types';
+import { Subject, SemesterMeta } from './types';
 
-export type Branch = 'computer' | 'it' | 'extc';
-
-// Third Semester Computer Engineering - Mumbai University
-export const COMPUTER_SUBJECTS: Subject[] = [
-    // Theory Subjects with External (60) + Internal (40) = 100
-    {
-        code: 'Maths',
-        name: 'Engineering Mathematics – III',
-        credits: 3,
-        components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
-            { name: 'Term Work', minMarks: 10, maxMarks: 25, marks: 0 },
-        ],
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPER – creates a fresh copy of a subject so state mutations never
+// bleed between renders / semester resets.
+// ─────────────────────────────────────────────────────────────────────────────
+function makeSubject(s: Omit<Subject, 'totalMarks' | 'grade' | 'gradePoints' | 'percentage' | 'isFailed'>): Subject {
+    return {
+        ...s,
+        components: s.components.map((c) => ({ ...c, marks: 0 })),
         totalMarks: 0,
         grade: '-',
         gradePoints: 0,
         percentage: 0,
         isFailed: false,
+    };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SEMESTER 3 – COMPUTER ENGINEERING
+// ─────────────────────────────────────────────────────────────────────────────
+const SEM3_COMPUTER_RAW = [
+    {
+        code: 'Maths',
+        name: 'Engineering Mathematics – III',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
+            { name: 'Term Work', minMarks: 10, maxMarks: 25 },
+        ],
     },
     {
         code: 'DSGT',
         name: 'Discrete Structure and Graph Theory',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'AOA',
         name: 'Analysis of Algorithms',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'COA',
         name: 'Computer Organization & Architecture',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'OE',
         name: 'Open Elective',
         credits: 2,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
-    // Practicals / TW (Labs with TW + OR)
     {
         code: 'AOA Lab',
         name: 'Analysis of Algorithms Lab',
         credits: 1,
         components: [
-            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'COA Lab',
         name: 'Computer Organization & Architecture Lab',
         credits: 1,
         components: [
-            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'FSJP',
         name: 'Full Stack Java Programming',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
-    // ED and ESE - Only TW (50)
     {
         code: 'ED',
-        name: 'Entreprenuership Development',
+        name: 'Entrepreneurship Development',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'ESE',
-        name: 'Environemental Science and Engineering',
+        name: 'Environmental Science and Engineering',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
 ];
 
-// Third Semester IT - Mumbai University
-export const IT_SUBJECTS: Subject[] = [
-    // Theory Subjects with External (60) + Internal (40) = 100
+// ─────────────────────────────────────────────────────────────────────────────
+// SEMESTER 3 – INFORMATION TECHNOLOGY
+// ─────────────────────────────────────────────────────────────────────────────
+const SEM3_IT_RAW = [
     {
         code: 'Maths',
         name: 'Applied Mathematics Thinking - I',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
-            { name: 'Term Work', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
+            { name: 'Term Work', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'ADSA',
         name: 'Advanced Data Structure & Analysis',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'DBMSA',
         name: 'Database Management System & Application',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'AT',
         name: 'Automata Theory',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'OE',
         name: 'Open Elective',
         credits: 2,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
-    // Practicals / TW (Labs with TW + OR)
     {
         code: 'ADS Lab',
         name: 'Advanced Data Structure & Analysis Lab',
         credits: 1,
         components: [
-            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'SQL Lab',
         name: 'SQL Lab',
         credits: 1,
         components: [
-            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'FSJP',
         name: 'Full Stack Java Programming',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
-    // ED and ESE - Only TW (50)
     {
         code: 'ED',
-        name: 'Entreprenuership Development',
+        name: 'Entrepreneurship Development',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'ES',
-        name: 'Environemental Science',
+        name: 'Environmental Science',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
 ];
 
-// Third Semester EXTC (Electronics and Telecommunication) - Mumbai University
-export const EXTC_SUBJECTS: Subject[] = [
-    // Theory Subjects
+// ─────────────────────────────────────────────────────────────────────────────
+// SEMESTER 3 – EXTC
+// ─────────────────────────────────────────────────────────────────────────────
+const SEM3_EXTC_RAW = [
     {
         code: 'Maths',
         name: 'Mathematics for Signal Analysis',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
-            { name: 'Term Work', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
+            { name: 'Term Work', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'EDLC',
         name: 'Electronic Devices and Linear Circuits',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'DSD',
         name: 'Digital System Design',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'NTCS',
         name: 'Network Theory and Control System',
         credits: 3,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'OE',
         name: 'Open Elective',
         credits: 2,
         components: [
-            { name: 'External', minMarks: 24, maxMarks: 60, marks: 0 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40, marks: 0 },
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
-    // Practicals / TW (Labs with TW + OR)
     {
         code: 'EDLC Lab',
         name: 'Electronic Devices and Linear Circuits Lab',
         credits: 1,
         components: [
-            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'DSD Lab',
         name: 'Digital System Design Lab',
         credits: 1,
         components: [
-            { name: 'TW', minMarks: 10, maxMarks: 25, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'CPP_Java',
         name: 'C++ and Java Programming',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
-            { name: 'OR', minMarks: 10, maxMarks: 25, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
+            { name: 'OR', minMarks: 10, maxMarks: 25 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
-    // ED and ESE - Only TW (50)
     {
         code: 'ED',
         name: 'Entrepreneurship Development',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
         ],
-        totalMarks: 0,
-        grade: '-',
-        gradePoints: 0,
-        percentage: 0,
-        isFailed: false,
     },
     {
         code: 'ESE',
         name: 'Environmental Science',
         credits: 2,
         components: [
-            { name: 'TW', minMarks: 20, maxMarks: 50, marks: 0 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
         ],
+    },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SEMESTER CONFIG (single source of truth)
+// To add a new semester, insert a new key here with its branches.
+// ─────────────────────────────────────────────────────────────────────────────
+export const SEMESTER_CONFIG: Record<
+    string,
+    {
+        meta: SemesterMeta;
+        branches: Record<string, Subject[]>;
+        practicalStartIndex: Record<string, number>;
+    }
+> = {
+    sem3: {
+        meta: {
+            label: 'Semester 3',
+            totalCredits: 22,
+            branches: [
+                { key: 'computer', label: 'Computer Engineering' },
+                { key: 'it', label: 'Information Technology' },
+                { key: 'extc', label: 'EXTC' },
+            ],
+        },
+        branches: {
+            computer: SEM3_COMPUTER_RAW.map(makeSubject),
+            it: SEM3_IT_RAW.map(makeSubject),
+            extc: SEM3_EXTC_RAW.map(makeSubject),
+        },
+        practicalStartIndex: {
+            computer: 5,
+            it: 5,
+            extc: 5,
+        },
+    },
+    // ── ADD SEMESTER 4, 5, 6, 7, 8 HERE ──────────────────────────────────────
+    // sem4: { meta: {...}, branches: { computer: [...] }, practicalStartIndex: {...} },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PUBLIC HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Returns a fresh copy of subjects for the given semester + branch. */
+export function getSubjects(semester: string, branch: string): Subject[] {
+    const semConfig = SEMESTER_CONFIG[semester];
+    if (!semConfig) return [];
+    const subjects = semConfig.branches[branch];
+    if (!subjects) return [];
+    return subjects.map((s) => ({
+        ...s,
+        components: s.components.map((c) => ({ ...c, marks: 0 })),
         totalMarks: 0,
         grade: '-',
         gradePoints: 0,
         percentage: 0,
         isFailed: false,
-    },
-];
-
-
-
-// Helper function to get subjects by branch
-export function getSubjectsByBranch(branch: Branch): Subject[] {
-    switch (branch) {
-        case 'computer':
-            return COMPUTER_SUBJECTS;
-        case 'it':
-            return IT_SUBJECTS;
-        case 'extc':
-            return EXTC_SUBJECTS;
-        default:
-            return COMPUTER_SUBJECTS;
-    }
+    }));
 }
 
-// For backward compatibility
-export const INITIAL_SUBJECTS = COMPUTER_SUBJECTS;
+/** Returns the index where "practical" subjects start for the given semester + branch. */
+export function getPracticalStartIndex(semester: string, branch: string): number {
+    return SEMESTER_CONFIG[semester]?.practicalStartIndex[branch] ?? 5;
+}
 
+/** Returns all semester metadata (for rendering the selector). */
+export function getAllSemesters() {
+    return Object.entries(SEMESTER_CONFIG).map(([key, val]) => ({
+        key,
+        ...val.meta,
+    }));
+}
+
+/** Returns branches available for a given semester. */
+export function getBranchesForSemester(semester: string) {
+    return SEMESTER_CONFIG[semester]?.meta.branches ?? [];
+}
+
+/** Returns total credits for a semester (useful for display). */
+export function getTotalCredits(semester: string): number {
+    return SEMESTER_CONFIG[semester]?.meta.totalCredits ?? 0;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LEGACY EXPORTS (kept for backward compatibility)
+// ─────────────────────────────────────────────────────────────────────────────
+export type Branch = string;
+
+export function getSubjectsByBranch(branch: Branch): Subject[] {
+    return getSubjects('sem3', branch);
+}
+
+export const COMPUTER_SUBJECTS = SEM3_COMPUTER_RAW.map(makeSubject);
+export const IT_SUBJECTS = SEM3_IT_RAW.map(makeSubject);
+export const EXTC_SUBJECTS = SEM3_EXTC_RAW.map(makeSubject);
+export const INITIAL_SUBJECTS = COMPUTER_SUBJECTS;
