@@ -302,7 +302,118 @@ const SEM3_EXTC_RAW = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SEMESTER CONFIG (single source of truth)
+// SEMESTER 4 – COMPUTER ENGINEERING (NEP 2020)
+// Theory: External (60) + Internal (40) = 100  [except BFS: 30+20=50]
+// Labs: Oral (25) + TW (25) = 50
+// TW-only subjects: TW (50) = 50
+// Mini Project: Oral (25) + TW (50) = 75
+// Total Credits = 23
+// ─────────────────────────────────────────────────────────────────────────────
+const SEM4_COMPUTER_RAW = [
+    // Theory Subjects
+    {
+        code: 'BFS',
+        name: 'Basics of Financial Services',
+        credits: 2,
+        components: [
+            { name: 'External', minMarks: 12, maxMarks: 30 },
+            { name: 'Internal', minMarks: 8, maxMarks: 20 },
+        ],
+    },
+    {
+        code: 'CT',
+        name: 'Computational Theory',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
+        ],
+    },
+    {
+        code: 'DBMS',
+        name: 'Database Management System',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
+        ],
+    },
+    {
+        code: 'OS',
+        name: 'Operating System',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
+        ],
+    },
+    {
+        code: 'IWT',
+        name: 'Introduction to Web Technologies',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
+        ],
+    },
+    // Lab Subjects
+    {
+        code: 'DBMS Lab',
+        name: 'DBMS Lab',
+        credits: 1,
+        components: [
+            { name: 'Oral', minMarks: 10, maxMarks: 25 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+        ],
+    },
+    {
+        code: 'OS Lab',
+        name: 'Operating System Lab',
+        credits: 1,
+        components: [
+            { name: 'Oral', minMarks: 10, maxMarks: 25 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+        ],
+    },
+    {
+        code: 'WT Lab',
+        name: 'Web Technologies Lab',
+        credits: 1,
+        components: [
+            { name: 'Oral', minMarks: 10, maxMarks: 25 },
+            { name: 'TW', minMarks: 10, maxMarks: 25 },
+        ],
+    },
+    // Term Work Only
+    {
+        code: 'BMD',
+        name: 'Business Model Development',
+        credits: 2,
+        components: [
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
+        ],
+    },
+    {
+        code: 'DT',
+        name: 'Design Thinking',
+        credits: 2,
+        components: [
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
+        ],
+    },
+    // Mini Project
+    {
+        code: 'MP',
+        name: 'Mini Project',
+        credits: 2,
+        components: [
+            { name: 'Oral', minMarks: 10, maxMarks: 25 },
+            { name: 'TW', minMarks: 20, maxMarks: 50 },
+        ],
+    },
+];
+
+
 // To add a new semester, insert a new key here with its branches.
 // ─────────────────────────────────────────────────────────────────────────────
 export const SEMESTER_CONFIG: Record<
@@ -334,8 +445,23 @@ export const SEMESTER_CONFIG: Record<
             extc: 5,
         },
     },
-    // ── ADD SEMESTER 4, 5, 6, 7, 8 HERE ──────────────────────────────────────
-    // sem4: { meta: {...}, branches: { computer: [...] }, practicalStartIndex: {...} },
+    sem4: {
+        meta: {
+            label: 'Semester 4',
+            totalCredits: 23,
+            branches: [
+                { key: 'computer', label: 'Computer Engineering' },
+            ],
+        },
+        branches: {
+            computer: SEM4_COMPUTER_RAW.map(makeSubject),
+        },
+        practicalStartIndex: {
+            computer: 5, // first 5 are theory subjects
+        },
+    },
+    // ── ADD SEMESTER 5, 6, 7, 8 HERE ─────────────────────────────────────────
+    // sem5: { meta: {...}, branches: { computer: [...] }, practicalStartIndex: {...} },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
