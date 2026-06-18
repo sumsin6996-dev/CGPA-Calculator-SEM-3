@@ -347,15 +347,6 @@ const SEM4_COMPUTER_RAW = [
             { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
     },
-    {
-        code: 'IWT',
-        name: 'Introduction to Web Technologies',
-        credits: 3,
-        components: [
-            { name: 'External', minMarks: 24, maxMarks: 60 },
-            { name: 'Internal', minMarks: 16, maxMarks: 40 },
-        ],
-    },
     // Lab Subjects
     {
         code: 'DBMS Lab',
@@ -373,6 +364,15 @@ const SEM4_COMPUTER_RAW = [
         components: [
             { name: 'Oral', minMarks: 10, maxMarks: 25 },
             { name: 'TW', minMarks: 10, maxMarks: 25 },
+        ],
+    },
+    {
+        code: 'IWT',
+        name: 'Introduction to Web Technologies',
+        credits: 3,
+        components: [
+            { name: 'External', minMarks: 24, maxMarks: 60 },
+            { name: 'Internal', minMarks: 16, maxMarks: 40 },
         ],
     },
     {
