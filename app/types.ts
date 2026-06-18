@@ -31,3 +31,18 @@ export interface CalculationResult {
     earnedCredits: number;
     gradeDistribution: { [key: string]: number };
 }
+
+// Semester selector type
+export type Semester = 'sem3' | 'sem4';
+
+// Metadata about each semester config entry
+export interface SemesterMeta {
+    label: string;         // Display label e.g. "Semester 3"
+    totalCredits: number;  // Total credits for quick display
+    branches: BranchMeta[];
+}
+
+export interface BranchMeta {
+    key: string;
+    label: string;
+}
